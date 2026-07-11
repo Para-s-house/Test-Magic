@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellazo - Turismo Inteligente en Solana</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.4/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@coral-xyz/anchor@0.30.1/dist/index.browser.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Huellazo</h1>
+        <p class="subtitle">Tu pasaporte turistico en Solana con MagicBlock</p>
+        <div id="wallet-section">
+            <button id="connect-btn" class="btn-wallet">Conectar Wallet</button>
+            <span id="wallet-address" class="wallet-addr"></span>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="turista">Modo Turista</button>
+        <button class="tab-btn" data-tab="negocio">Modo Negocio</button>
+    </nav>
+
+    <!-- =============================================================== -->
+    <!-- VISTA A: TURISTA                                                 -->
+    <!-- =============================================================== -->
+    <section id="tab-turista" class="tab-content active">
+        <div class="card">
+            <h2>Mi Ubicación GPS (Simulada)</h2>
+            <div class="gps-controls">
+                <label>Latitud actual:
+                    <input type="number" id="currentLat" step="0.0001" value="4.5981">
+                </label>
+                <label>Longitud actual:
+                    <input type="number" id="currentLong" step="0.0001" value="-74.0761">
+                </label>
+                <button id="refresh-loc" class="btn">Actualizar Ubicacion</button>
+            </div>
+            <p class="hint">Simula el GPS del telefono. Cambia las coordenadas para "moverte" por la ciudad.</p>
+        </div>
+
+        <div class="card">
+            <h2>Puntos de Interes Cercanos</h2>
+            <div id="poi-list" class="poi-list">
+                <p class="loading">Cargando POIs...</p>
+            </div>
+        </div>
+
+        <div class="card hidden" id="mint-result-card">
+            <h2>Resultado del Minteo</h2>
+            <div id="mint-result"></div>
+        </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- VISTA B: NEGOCIO                                                 -->
+    <!-- =============================================================== -->
+    <section id="tab-negocio" class="tab-content">
+        <div class="card">
+            <h2>Misiones de Negocio (Pagos QR)</h2>
+            <p>Escanea el QR de un negocio, paga y recibe una insignia exclusiva.</p>
+            <div id="business-list" class="business-list">
+                <p class="loading">Cargando negocios...</p>
+            </div>
+        </div>
+
+        <div class="card hidden" id="qr-display-card">
+            <h2>QR de Pago</h2>
+            <div id="qr-display"></div>
+            <button id="pay-btn" class="btn-pay">Pagar y Reclamar Insignia</button>
+        </div>
+
+        <div class="card hidden" id="business-result-card">
+            <h2>Resultado del Pago</h2>
+            <div id="business-result"></div>
+        </div>
+    </section>
+
+    <!-- =============================================================== -->
+    <!-- Status bar                                                       -->
+    <!-- =============================================================== -->
+    <div id="status-bar" class="status-bar">
+        <span id="status-text"></span>
+    </div>
+
+    <footer>
+        <p>Huellazo v0.1.0 - Prototipo con MagicBlock Ephemeral Rollups</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

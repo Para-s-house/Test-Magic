@@ -1,0 +1,719 @@
+{
+  "address": "4pioWVSCp5oSbxbeRbquccusTkvT6Z9B8jTg7j2XXNVk",
+  "metadata": {
+    "name": "huellazo",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Huellazo - Turismo inteligente en Solana con MagicBlock Ephemeral Rollups"
+  },
+  "instructions": [
+    {
+      "name": "commit",
+      "docs": [
+        "Hace commit del estado de la PDA delegada desde el ER hacia la",
+        "capa base. Se ejecuta en el Ephemeral Rollup."
+      ],
+      "discriminator": [
+        223,
+        140,
+        142,
+        165,
+        229,
+        208,
+        156,
+        74
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "poap",
+          "writable": true
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111"
+        },
+        {
+          "name": "magic_context",
+          "writable": true,
+          "address": "MagicContext1111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "delegate",
+      "docs": [
+        "Delega la PDA del POAP al programa de delegación de MagicBlock.",
+        "Esto transfiere temporalmente la propiedad de la cuenta a un",
+        "Ephemeral Rollup, permitiendo minteos rápidos y sin gas.",
+        "Se ejecuta en la capa base (Solana L1)."
+      ],
+      "discriminator": [
+        90,
+        147,
+        75,
+        178,
+        85,
+        88,
+        4,
+        137
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "signer": true
+        },
+        {
+          "name": "buffer_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                56,
+                204,
+                159,
+                212,
+                32,
+                56,
+                86,
+                109,
+                199,
+                228,
+                211,
+                67,
+                16,
+                155,
+                16,
+                30,
+                147,
+                122,
+                71,
+                152,
+                82,
+                121,
+                100,
+                145,
+                4,
+                29,
+                146,
+                213,
+                91,
+                234,
+                57,
+                39
+              ]
+            }
+          }
+        },
+        {
+          "name": "delegation_record_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "delegation_metadata_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110,
+                  45,
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pda"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "pda",
+          "writable": true
+        },
+        {
+          "name": "owner_program",
+          "address": "4pioWVSCp5oSbxbeRbquccusTkvT6Z9B8jTg7j2XXNVk"
+        },
+        {
+          "name": "delegation_program",
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "docs": [
+        "Inicializa la configuración global del programa Huellazo."
+      ],
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mint_business",
+      "docs": [
+        "Procesa el pago de un producto del negocio y mintea atómicamente la",
+        "insignia/POAP del negocio al turista en la misma transacción.",
+        "Transfiere lamports del turista al negocio y crea el PoapState."
+      ],
+      "discriminator": [
+        205,
+        166,
+        39,
+        101,
+        216,
+        133,
+        222,
+        249
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Turista que paga y recibe el POAP."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "business_wallet",
+          "docs": [
+            "Negocio que recibe el pago."
+          ],
+          "writable": true
+        },
+        {
+          "name": "config",
+          "docs": [
+            "Referencia al config."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "poap",
+          "docs": [
+            "PDA del POAP del negocio. Se deriva de [b\"poap\", owner, token_id]."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  97,
+                  112
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer"
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u64"
+        },
+        {
+          "name": "token_uri",
+          "type": "string"
+        },
+        {
+          "name": "business_latitude",
+          "type": "f64"
+        },
+        {
+          "name": "business_longitude",
+          "type": "f64"
+        },
+        {
+          "name": "amount_lamports",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "mint_place",
+      "docs": [
+        "Mintea un POAP de lugar turístico. Verifica que el turista esté dentro",
+        "del radio válido del punto de interés. Esta acción se ejecuta en el",
+        "Ephemeral Rollup para ser instantánea y sin gas para el turista."
+      ],
+      "discriminator": [
+        197,
+        207,
+        201,
+        59,
+        30,
+        232,
+        199,
+        124
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "poap",
+          "docs": [
+            "PDA del POAP. Se deriva de [b\"poap\", owner, token_id].",
+            "`init_if_needed` permite reintentar si la cuenta no existe."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  97,
+                  112
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "payer"
+              },
+              {
+                "kind": "arg",
+                "path": "token_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_id",
+          "type": "u64"
+        },
+        {
+          "name": "token_uri",
+          "type": "string"
+        },
+        {
+          "name": "poi_latitude",
+          "type": "f64"
+        },
+        {
+          "name": "poi_longitude",
+          "type": "f64"
+        },
+        {
+          "name": "poap_type",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "process_undelegation",
+      "discriminator": [
+        196,
+        28,
+        41,
+        206,
+        48,
+        37,
+        51,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "base_account",
+          "writable": true
+        },
+        {
+          "name": "buffer"
+        },
+        {
+          "name": "payer",
+          "writable": true
+        },
+        {
+          "name": "system_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "account_seeds",
+          "type": {
+            "vec": "bytes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "undelegate",
+      "docs": [
+        "Hace commit + undelegate: sincroniza el estado final y devuelve",
+        "la propiedad de la PDA al programa. Se ejecuta en el ER."
+      ],
+      "discriminator": [
+        131,
+        148,
+        180,
+        198,
+        91,
+        104,
+        42,
+        238
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "poap",
+          "writable": true
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111"
+        },
+        {
+          "name": "magic_context",
+          "writable": true,
+          "address": "MagicContext1111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ConfigState",
+      "discriminator": [
+        193,
+        77,
+        160,
+        128,
+        208,
+        254,
+        180,
+        135
+      ]
+    },
+    {
+      "name": "PoapState",
+      "discriminator": [
+        40,
+        186,
+        140,
+        140,
+        11,
+        145,
+        133,
+        125
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "TooFarFromPOI",
+      "msg": "No estas lo suficientemente cerca del punto de interes para reclamar este Huellazo"
+    },
+    {
+      "code": 6001,
+      "name": "TokenIdAlreadyExists",
+      "msg": "El ID del token ya existe — el poap ya fue minteado"
+    },
+    {
+      "code": 6002,
+      "name": "UriTooLong",
+      "msg": "La URI del token excede la longitud maxima permitida"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidPaymentAmount",
+      "msg": "El pago no coincide con el precio de la promocion del negocio"
+    },
+    {
+      "code": 6004,
+      "name": "Unauthorized",
+      "msg": "Solo el administrador del config puede realizar esta accion"
+    },
+    {
+      "code": 6005,
+      "name": "NotDelegated",
+      "msg": "La cuenta no esta delegada a MagicBlock"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidCoordinates",
+      "msg": "La latitud o longitud proporcionada no es valida"
+    }
+  ],
+  "types": [
+    {
+      "name": "ConfigState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "Autoridad que puede inicializar el programa."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "total_minted",
+            "docs": [
+              "Contador global de tokens minteados."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump de la PDA de config."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PoapState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_id",
+            "docs": [
+              "Identificador único e irrepetible del POAP."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "owner_wallet",
+            "docs": [
+              "Pubkey de la wallet propietaria del POAP (turista)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "smart_contract_address",
+            "docs": [
+              "Pubkey del programa emisor (este smart contract)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token_uri",
+            "docs": [
+              "URL que apunta a los metadatos off-chain (JSON gestionado por el backend Python)."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "latitude",
+            "docs": [
+              "Latitud donde se minteó el POAP."
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "longitude",
+            "docs": [
+              "Longitud donde se minteó el POAP."
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "poap_type",
+            "docs": [
+              "Tipo de POAP: 0 = lugar turístico, 1 = negocio."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "Bump de la PDA."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
