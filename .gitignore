@@ -1,8 +1,64 @@
+# =====================
+# Solana / Anchor
+# =====================
 .anchor
-.DS_Store
 target
-**/*.rs.bk
-node_modules
 test-ledger
-.yarn
+**/*.rs.bk
 .surfpool
+
+# Keypairs del programa (NUNCA subirse al repo)
+target/deploy/*-keypair.json
+
+# =====================
+# Python
+# =====================
+backend/venv/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# =====================
+# Node / Frontend
+# =====================
+node_modules
+.yarn
+.prettierignore
+
+# =====================
+# IDE / Editor
+# =====================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# =====================
+# OS
+# =====================
+.DS_Store
+Thumbs.db
+
+# =====================
+# Env / Secrets
+# =====================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# =====================
+# Logs
+# =====================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
